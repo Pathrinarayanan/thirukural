@@ -136,7 +136,7 @@ fun MainScreen(viewModel: MainViewModel,jsonString: String) {
                 when (selectedIndex) {
                     0 -> HomeScreen(viewModel = viewModel, jsonString)
                     1 -> HistoryScreen(viewModel, jsonString)
-                    2 -> LessonsScreen()
+                    2 -> LessonsScreen(jsonString)
                 }
             }
         }
