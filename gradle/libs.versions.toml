@@ -27,7 +27,7 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 android-retrofit = {group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit"}
 android-gson = {group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit"}
-
+nav-bar = {group = "com.exyte" , name = "animated-navigation-bar", version= "1.0.0"}
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

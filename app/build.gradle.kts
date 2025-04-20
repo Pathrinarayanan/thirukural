@@ -48,6 +48,7 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.android.gson)
+    implementation(libs.nav.bar)
     implementation(libs.android.retrofit)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
