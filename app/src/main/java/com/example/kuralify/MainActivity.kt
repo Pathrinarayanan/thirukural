@@ -1,10 +1,12 @@
 package com.example.kuralify
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -47,6 +49,7 @@ import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     private  lateinit var viewmodel : MainViewModel
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewmodel = ViewModelProvider(this).get(MainViewModel::class.java)
@@ -62,57 +65,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
-@Composable
-fun MainScreen1(viewModel: MainViewModel, jsonString: String){
-    var selectedIndex by remember { mutableStateOf(0)}
-    Column (
-        modifier = Modifier.fillMaxSize()
-    ){
-        OutlinedTextField(
-            value = viewModel.text,
-            onValueChange = {
-                viewModel.text = it
-            },
-            modifier = Modifier.padding(50.dp).width(300.dp)
-                .height(50.dp)
-        )
-        Button(
-            onClick = {
-               viewModel.viewModelScope.launch {
-                   viewModel.getKuralId()
-               }
-            }
-        ) {
-            Text( "Search")
-        }
-        AnimatedNavigationBar(modifier = Modifier.fillMaxWidth().background(Color.Red).height(500.dp),selectedIndex, indentAnimation = StraightIndent(
-            tween(200)
-        )
-        ) {
-            Text("kural ", modifier = Modifier.wrapContentSize().clickable{
-                selectedIndex = 0
-            })
-            Text("kural  :)",modifier = Modifier.wrapContentSize().clickable{
-                selectedIndex =1
-            } )
-            Text("kural3")
-
-        }
-        Column(
-            Modifier,
-            verticalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-            viewModel.ids?.value?.forEach {id->
-                val data = searchItemById(jsonString,id)
-                Text("kural id : ${data?.id}")
-                Text("kural  : ${data?.kural}")
-                Text("Explanation: ${data?.couplet}")
-            }
-        }
-    }
-
-}
 
 fun loadJson(context : Context, fileName: String) : String{
     return context.assets.open(fileName).bufferedReader()

@@ -1,5 +1,7 @@
 package com.example.kuralify.view
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -49,6 +51,7 @@ import com.example.kuralify.view.screens.HistoryScreen
 import com.example.kuralify.view.screens.LessonsScreen
 import kotlinx.coroutines.launch
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 
 @Composable
@@ -131,8 +134,8 @@ fun MainScreen(viewModel: MainViewModel,jsonString: String) {
                     .padding(padding)
             ) {
                 when (selectedIndex) {
-                    0 -> HomeScreen(viewModel = viewModel,jsonString)
-                    1 -> HistoryScreen()
+                    0 -> HomeScreen(viewModel = viewModel, jsonString)
+                    1 -> HistoryScreen(viewModel, jsonString)
                     2 -> LessonsScreen()
                 }
             }

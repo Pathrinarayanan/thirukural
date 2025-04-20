@@ -1,5 +1,7 @@
 package com.example.kuralify.view.screens
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -33,9 +35,9 @@ import com.example.kuralify.searchItemById
 import com.example.kuralify.theme.*
 import kotlinx.coroutines.launch
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HomeScreen(viewModel: MainViewModel, jsonString: String) {
-    var showResults by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -84,14 +86,15 @@ fun HomeScreen(viewModel: MainViewModel, jsonString: String) {
             IconButton(
                 onClick = {
                     if(viewModel.text != "") {
-                        if (showResults) {
-                            showResults = false
+                        if (viewModel.showResults) {
+                            viewModel.showResults = false
                             viewModel.text = ""
                             viewModel.ids?.value = emptyList()
                         } else {
                             viewModel.viewModelScope.launch {
                                 viewModel.getKuralId()
-                                showResults = true
+                                viewModel.showResults = true
+                                viewModel.addHistory()
                             }
                         }
                     }
@@ -101,7 +104,7 @@ fun HomeScreen(viewModel: MainViewModel, jsonString: String) {
                     .background(PrimaryBlue, CircleShape)
             ) {
                 Icon(
-                    if (!showResults) Icons.Filled.KeyboardArrowUp else Icons.Filled.Refresh,
+                    if (!viewModel.showResults) Icons.Filled.KeyboardArrowUp else Icons.Filled.Refresh,
                     contentDescription = "Search",
                     tint = White
                 )
@@ -110,7 +113,7 @@ fun HomeScreen(viewModel: MainViewModel, jsonString: String) {
 
 
         this.AnimatedVisibility(
-            visible = showResults,
+            visible = viewModel.showResults,
             enter = fadeIn() + expandVertically(),
             exit = fadeOut() + shrinkVertically()
         ) {
